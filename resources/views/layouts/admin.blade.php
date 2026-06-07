@@ -35,9 +35,7 @@
             <a href="{{ route('diagnosticos.index') }}" class="sb-link {{ request()->is('diagnosticos*') ? 'active' : '' }}"><div class="sb-ico">🔬</div> Diagnósticos</a>
             <a href="{{ route('tratamientos.index') }}" class="sb-link {{ request()->is('tratamientos*') ? 'active' : '' }}"><div class="sb-ico">💊</div> Tratamientos</a>
             <a href="{{ route('medicamentos.index') }}" class="sb-link {{ request()->is('medicamentos*') ? 'active' : '' }}"><div class="sb-ico">🧪</div> Medicamentos</a>
-            <div class="sb-section" style="margin-top:.6rem">Acciones</div>
-            <a href="{{ route('pacientes.create') }}" class="sb-link"><div class="sb-ico">➕</div> Nuevo Paciente <span class="sb-badge">Nuevo</span></a>
-            <a href="{{ route('citas.create') }}" class="sb-link"><div class="sb-ico">📋</div> Nueva Cita</a>
+            
         </div>
         <div class="sb-footer">
             <div class="sb-user">

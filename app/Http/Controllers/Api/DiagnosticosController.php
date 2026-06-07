@@ -1,43 +1,58 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Diagnostico;
-use App\Models\Paciente;
-use App\Models\Medico;
 use Illuminate\Http\Request;
 
-class DiagnosticoController extends Controller
+class DiagnosticosController extends Controller
 {
-    public function index(Request $request) {
-        $diagnosticos = Diagnostico::all();
-        $pacientes = Paciente::all();
-        $medicos = Medico::all();
-        
-        $diagnostico = null;
-        if ($request->has('edit_id')) {
-            $diagnostico = Diagnostico::find($request->edit_id);
-        }
-        
-        return view('diagnosticos', compact('diagnosticos', 'pacientes', 'medicos', 'diagnostico'));
+    public function index()
+    {
+        $diagnosticos = Diagnostico::with(['paciente', 'medico'])->get();
+        return response()->json($diagnosticos, 200);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
-            'fecha' => 'required|date',
-            'paciente_id' => 'required',
-            'medico_id' => 'required',
-            'tipo' => 'required',
-            'gravedad' => 'required'
+            'fecha'       => 'required|date',
+            'descripcion' => 'required|string',
+            'paciente_id' => 'required|exists:pacientes,id',
+            'medico_id'   => 'required|exists:medicos,id',
         ]);
 
-        Diagnostico::create($request->all());
-        return redirect()->route('diagnosticos.index')->with('success', 'Diagnóstico registrado.');
+        $diagnostico = Diagnostico::create($request->all());
+        return response()->json([
+            'message' => 'Diagnóstico registrado correctamente vía API.',
+            'data' => $diagnostico
+        ], 201);
     }
 
-    public function update(Request $request, $id) {
+    public function show(string $id)
+    {
+        return response()->json(Diagnostico::with(['paciente', 'medico'])->findOrFail($id), 200);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'fecha' => 'required|date'
+        ]);
+
         $diagnostico = Diagnostico::findOrFail($id);
         $diagnostico->update($request->all());
-        return redirect()->route('diagnosticos.index')->with('success', 'Diagnóstico actualizado.');
+
+        return response()->json([
+            'message' => 'Diagnóstico actualizado con éxito vía API.',
+            'data' => $diagnostico
+        ], 200);
+    }
+
+    public function destroy(string $id)
+    {
+        Diagnostico::findOrFail($id)->delete();
+        return response()->json(['message' => 'Diagnóstico de la API eliminado.'], 200);
     }
 }
