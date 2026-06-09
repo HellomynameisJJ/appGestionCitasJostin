@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear cuenta · SANAR+</title>
+    <title>Crear cuenta en CliniSync+</title>
     @vite(['resources/css/app.css'])
     <style>
         /* Posiciona el logotipo exactamente en la esquina superior izquierda */
@@ -57,7 +57,7 @@
                 <path d="M 44,22 L 52,22 M 48,18 L 48,26" fill="none" stroke="var(--green3)" stroke-width="3.5" stroke-linecap="round"/>
             </g>
             <path d="M 92,30 Q 97,35 102,30 Q 97,25 92,30 Z M 92,30 Q 97,35 92,40 Q 87,35 92,30 Z" class="logo-sparkle"/>
-            <text x="112" y="46" class="text-main">SANAR</text>
+            <text x="112" y="46" class="text-main">CliniSync</text>
             <text x="234" y="46" class="text-plus">+</text>
             <text x="114" y="62" class="text-sub">SISTEMA DE GESTIÓN MÉDICA</text>
         </svg>
@@ -68,7 +68,7 @@
         <div class="login-card">
             <div class="login-header">
                 <div class="login-icon">✦</div>
-                <h1>Comienza con SANAR+</h1>
+                <h1>Comienza con CliniSync</h1>
                 <p>Crea tu cuenta para empezar a gestionar la plataforma médica.</p>
             </div>
 

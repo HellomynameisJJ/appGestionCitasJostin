@@ -1,10 +1,9 @@
 @extends('layouts.admin')
 
-@section('title', 'Nuevo Paciente')
-@section('hero_icon', '➕')
-@section('hero_title', 'Registrar Paciente')
-@section('hero_subtitle', 'Completa los datos del nuevo paciente')
-@section('hero_img', 'https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?w=1400&auto=format&fit=crop&q=80')
+@section('title', 'Admisión - CliniSync')
+@section('hero_icon', '👤')
+@section('hero_title', 'Registro de Pacientes | CliniSync')
+@section('hero_subtitle', 'Incorporar nuevos usuarios al ecosistema clínico de CliniSync')
 
 @section('content')
 <div class="form-card observe">
@@ -12,77 +11,80 @@
         @csrf
         <div class="form-grid">
             <div class="form-group">
-                <label>NOMBRE</label>
-                <input type="text" name="nombre" value="{{ old('nombre') }}" placeholder="Juan" required>
+                <label>Nombres</label>
+                <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}" placeholder="Ej. Juan Carlos" required>
             </div>
             <div class="form-group">
-                <label>APELLIDO</label>
-                <input type="text" name="apellido" value="{{ old('apellido') }}" placeholder="Pérez" required>
+                <label>Apellidos</label>
+                <input type="text" name="apellido" class="form-control" value="{{ old('apellido') }}" placeholder="Ej. Pérez Salazar" required>
             </div>
             <div class="form-group">
-                <label>FECHA DE NACIMIENTO</label>
-                <input type="date" name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" required>
+                <label>Fecha de Nacimiento</label>
+                <input type="date" name="fecha_nacimiento" class="form-control" value="{{ old('fecha_nacimiento') }}" required>
             </div>
             <div class="form-group">
-                <label>GÉNERO</label>
-                <select name="genero">
-                    <option value="">Seleccionar…</option>
+                <label>Género</label>
+                <select name="genero" class="form-control">
+                    <option value="">Seleccionar identidad...</option>
                     <option value="masculino" {{ old('genero')=='masculino'?'selected':'' }}>Masculino</option>
                     <option value="femenino"  {{ old('genero')=='femenino' ?'selected':'' }}>Femenino</option>
                     <option value="otro"      {{ old('genero')=='otro'     ?'selected':'' }}>Otro</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>TELÉFONO</label>
-                <input type="text" name="telefono" value="{{ old('telefono') }}" placeholder="+51 999 000 000">
+                <label>Contacto Telefónico</label>
+                <input type="text" name="telefono" class="form-control" value="{{ old('telefono') }}" placeholder="Ej. 999 111 222">
             </div>
             <div class="form-group">
-                <label>TIPO DE SANGRE</label>
-                <select name="tipo_sangre">
-                    <option value="">Seleccionar…</option>
-                    @foreach(['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $ts)
+                <label>Grupo Sanguíneo</label>
+                <select name="tipo_sangre" class="form-control">
+                    <option value="">Seleccionar grupo...</option>
+                    @foreach(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $ts)
                     <option value="{{ $ts }}" {{ old('tipo_sangre')==$ts?'selected':'' }}>{{ $ts }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group form-full">
-                <label>DIRECCIÓN</label>
-                <input type="text" name="direccion" value="{{ old('direccion') }}" placeholder="Av. Principal 123, Lima">
+                <label>Domicilio Actual</label>
+                <input type="text" name="direccion" class="form-control" value="{{ old('direccion') }}" placeholder="Ej. Av. Los Próceres 123, Urb. San Juan">
             </div>
         </div>
-        <div class="form-actions">
-            <a href="{{ route('pacientes.index') }}" class="btn btn-ghost">Cancelar</a>
-            <button type="submit" class="btn btn-fill">Guardar Paciente →</button>
+        <div class="form-actions" style="margin-top: 1.5rem;">
+            <a href="{{ route('pacientes.index') }}" class="btn-cancel">Descartar</a>
+            <button type="submit" class="btn-submit">💾 Registrar en CliniSync</button>
         </div>
     </form>
 </div>
 
-<!-- Tabla de pacientes registrados -->
 <div class="table-card observe" style="margin-top: 2rem;">
-    <h2> Pacientes registrados recientemente</h2>
+    <h2>Censo de Pacientes - CliniSync</h2>
     <table class="data-table">
         <thead>
             <tr>
-                <th>#</th>
-                <th>Nombre</th>
+                <th>Código ID</th>
+                <th>Paciente</th>
                 <th>Nacimiento</th>
                 <th>Género</th>
-                <th>Teléfono</th>
-                <th>Tipo sangre</th>
+                <th>Contacto</th>
+                <th>Factor Sanguíneo</th>
             </tr>
         </thead>
         <tbody>
             @forelse($pacientes as $p)
             <tr>
-                <td><span class="row-id">{{ $p->id }}</span></td>
+                <td><span class="row-id">PAT-{{ str_pad($p->id, 4, '0', STR_PAD_LEFT) }}</span></td>
                 <td><strong>{{ $p->nombre }} {{ $p->apellido }}</strong></td>
-                <td>{{ \Carbon\Carbon::parse($p->fecha_nacimiento)->format('d/m/Y') }}</td>
+                <td>📅 {{ \Carbon\Carbon::parse($p->fecha_nacimiento)->format('d/m/Y') }}</td>
                 <td>{{ ucfirst($p->genero) }}</td>
-                <td>{{ $p->telefono ?? '—' }}</td>
-                <td><span class="badge badge-blood">{{ $p->tipo_sangre ?? '—' }}</span></td>
+                <td>📞 {{ $p->telefono ?? '—' }}</td>
+                <td><span class="badge-dosis">🩸 {{ $p->tipo_sangre ?? 'N/A' }}</span></td>
             </tr>
             @empty
-            <tr><td colspan="6" class="empty-row">No hay pacientes registrados.</td></tr>
+            <tr>
+                <td colspan="6" style="text-align: center; color: #94a3b8; padding: 30px; font-style: italic;">
+                    No existen pacientes registrados en CliniSync actualmente.
+                </td>
+            </tr>
             @endforelse
         </tbody>
     </table>

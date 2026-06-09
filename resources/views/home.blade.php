@@ -1,12 +1,12 @@
 {{-- ═══════════════════════════════════════════
      resources/views/home.blade.php
-     Dashboard principal de SANAR+
+     Dashboard principal de CliniSync+
 ═══════════════════════════════════════════ --}}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Dashboard · SANAR+</title>
+    <title>Dashboard CliniSync+</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
     *{cursor:none!important}
@@ -25,8 +25,8 @@
 
 <nav class="n">
     <a href="/" class="n-brand">
-        <div class="n-logo">S+</div>
-        <div><div class="n-name">SANAR<span>+</span></div><div class="n-sub">Panel de gestión</div></div>
+        <div class="n-logo">C+</div>
+        <div><div class="n-name">CliniSync+<span>+</span></div><div class="n-sub">Panel de gestión</div></div>
     </a>
     <div class="n-user">
         <div class="n-user-info">
@@ -44,23 +44,23 @@
     <div class="dash-hero observe">
         <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=1200&auto=format&fit=crop&q=80" alt="Clínica">
         <div class="dash-hero-overlay">
-            <div class="status"><span class="status-dot"></span> Sistema sincronizado</div>
+            <div class="status"><span class="status-dot"></span> Datos actualizados en tiempo real</div>
             <div class="dash-date">{{ \Carbon\Carbon::now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}</div>
-            <h1>Bienvenido, <em>{{ explode(' ', Auth::user()->name)[0] }}.</em></h1>
-            <p>Administra pacientes, citas, diagnósticos y más.</p>
+            <h1>Qué gusto verte, <em>{{ explode(' ', Auth::user()->name)[0] }}.</em></h1>
+            <p>Tu jornada médica está lista. Revisa las estadísticas y optimiza la atención de hoy.</p>
 
-<a href="#" class="btn btn-fill">Explorar sistema →</a>
+            <a href="#" class="btn btn-fill">Comenzar gestión →</a>
         </div>
     </div>
 
     {{-- STATS --}}
     <div class="stats-grid">
-        <div class="stat-card observe"><div class="stat-ico">👤</div><div class="stat-n">{{ \App\Models\Paciente::count() }}</div><div class="stat-l">Pacientes</div></div>
-        <div class="stat-card observe" style="transition-delay:.05s"><div class="stat-ico">🩺</div><div class="stat-n">{{ \App\Models\Medico::count() }}</div><div class="stat-l">Médicos</div></div>
-        <div class="stat-card observe" style="transition-delay:.1s"><div class="stat-ico">📅</div><div class="stat-n">{{ \App\Models\Cita::count() }}</div><div class="stat-l">Citas</div></div>
-        <div class="stat-card observe" style="transition-delay:.15s"><div class="stat-ico">🔬</div><div class="stat-n">{{ \App\Models\Diagnostico::count() }}</div><div class="stat-l">Diagnósticos</div></div>
-        <div class="stat-card observe" style="transition-delay:.2s"><div class="stat-ico">💊</div><div class="stat-n">{{ \App\Models\Tratamiento::count() }}</div><div class="stat-l">Tratamientos</div></div>
-        <div class="stat-card observe" style="transition-delay:.25s"><div class="stat-ico">🧪</div><div class="stat-n">{{ \App\Models\Medicamento::count() }}</div><div class="stat-l">Medicamentos</div></div>
+        <div class="stat-card observe"><div class="stat-ico">👤</div><div class="stat-n">{{ \App\Models\Paciente::count() }}</div><div class="stat-l">Pacientes registrados</div></div>
+        <div class="stat-card observe" style="transition-delay:.05s"><div class="stat-ico">🩺</div><div class="stat-n">{{ \App\Models\Medico::count() }}</div><div class="stat-l">Cuerpo médico</div></div>
+        <div class="stat-card observe" style="transition-delay:.1s"><div class="stat-ico">📅</div><div class="stat-n">{{ \App\Models\Cita::count() }}</div><div class="stat-l">Citas agendadas</div></div>
+        <div class="stat-card observe" style="transition-delay:.15s"><div class="stat-ico">🔬</div><div class="stat-n">{{ \App\Models\Diagnostico::count() }}</div><div class="stat-l">Historiales clínicos</div></div>
+        <div class="stat-card observe" style="transition-delay:.2s"><div class="stat-ico">💊</div><div class="stat-n">{{ \App\Models\Tratamiento::count() }}</div><div class="stat-l">Tratamientos activos</div></div>
+        <div class="stat-card observe" style="transition-delay:.25s"><div class="stat-ico">🧪</div><div class="stat-n">{{ \App\Models\Medicamento::count() }}</div><div class="stat-l">Catálogo médico</div></div>
     </div>
 
     {{-- BENTO --}}
@@ -68,7 +68,7 @@
         <div class="db-card observe">
             <img src="https://comex-assets.s3.amazonaws.com/comex-assets/web/posts/6328/hechos---salud-040920-032652.jpg" style="width:100%;height:160px;object-fit:cover;filter:brightness(.5) saturate(.7)">
             <div class="db-card-head" style="border-top:1px solid var(--border)">
-                <div class="db-card-title"><span>⚡</span> Acceso rápido</div>
+                <div class="db-card-title"><span>⚡</span> Enlaces directos</div>
             </div>
             <div class="db-card-body">
                 <div class="quick-nav">
@@ -83,8 +83,8 @@
         </div>
         <div class="db-card observe">
             <div class="db-card-head">
-                <div class="db-card-title"><span>✦</span> Estado del sistema</div>
-                <span class="badge badge-green">En vivo</span>
+                <div class="db-card-title"><span>✦</span> Rendimiento del servidor</div>
+                <span class="badge badge-green">En línea</span>
             </div>
             <div class="db-card-body">
                 <div class="status-list">

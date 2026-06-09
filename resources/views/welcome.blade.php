@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SANAR+ · Sistema de Gestión Médica</title>
+    <title>CliniSync · Sistema de Gestión de Citas Médicas</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
     /* CURSOR */
@@ -111,7 +111,7 @@
     <a href="/" class="n-brand">
         <div class="n-logo">S+</div>
         <div>
-            <div class="n-name">SANAR<span>+</span></div>
+            <div class="n-name">CliniSync<span>+</span></div>
             <div class="n-sub">Sistema de Gestión Médica</div>
         </div>
     </a>
@@ -230,11 +230,11 @@
     </div>
 </div>
 
-<!-- POR QUÉ SANAR -->
+<!-- POR QUÉ CliniSync -->
 <div id="por-que" class="lp lp-dark">
     <div class="lp-inner">
         <div class="sec-header">
-            <div class="sec-sup observe">¿Por qué SANAR+?</div>
+            <div class="sec-sup observe">¿Por qué CliniSync?</div>
             <h2 class="sec-h observe">Construido para <em>profesionales</em></h2>
         </div>
         <div class="bento">
@@ -295,8 +295,8 @@
     <div class="footer-grid">
         <div>
             <a href="/" class="n-brand" style="text-decoration:none;color:var(--text)">
-                <div class="sb-logo">S+</div>
-                <div><div class="n-name" style="font-size:.95rem">SANAR<span style="color:var(--green)">+</span></div></div>
+                <div class="sb-logo">C+</div>
+                <div><div class="n-name" style="font-size:.95rem">CliniSync<span style="color:var(--green)">+</span></div></div>
             </a>
             <p class="footer-desc">Sistema integral de gestión médica. Backend Developer Web · SENATI 2025.</p>
         </div>
@@ -320,7 +320,7 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>© {{ date('Y') }} SANAR+ · Sistema de Gestión Médica · SENATI</p>
+        <p>© {{ date('Y') }} CliniSync · Sistema de Gestión de Citas Médicas · SENATI</p>
         <p>Backend Developer Web</p>
     </div>
 </footer>

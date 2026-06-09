@@ -2,20 +2,20 @@
 
 {{-- Configuración dinámica del encabezado según la acción --}}
 @if(request()->routeIs('medicamentos.edit') || isset($medicamento))
-    @section('title', 'Editar Medicamento')
-    @section('hero_icon', '✏️')
-    @section('hero_title', 'Modificar Medicamento')
-    @section('hero_subtitle', 'Actualizar especificaciones y dosificación del fármaco')
+    @section('title', 'Actualizar Fármaco')
+    @section('hero_icon', '⚙️')
+    @section('hero_title', 'Ajustes del Medicamento')
+    @section('hero_subtitle', 'Modificar las pautas, el laboratorio y las advertencias de la sustancia')
 @elseif(request()->routeIs('medicamentos.create'))
-    @section('title', 'Nuevo Medicamento')
-    @section('hero_icon', '🧪')
-    @section('hero_title', 'Registrar Medicamento')
-    @section('hero_subtitle', 'Añadir un nuevo fármaco al inventario médico')
+    @section('title', 'Añadir Sustancia')
+    @section('hero_icon', '📦')
+    @section('hero_title', 'Alta de Medicamento')
+    @section('hero_subtitle', 'Incorporar un nuevo recurso farmacológico al catálogo institucional')
 @else
-    @section('title', 'Medicamentos')
-    @section('hero_icon', '🧪')
-    @section('hero_title', 'Control de Medicamentos')
-    @section('hero_subtitle', 'Inventario, dosificación y tratamientos vinculados')
+    @section('title', 'Catálogo de Fármacos')
+    @section('hero_icon', '🛡️')
+    @section('hero_title', 'Repositorio de Medicación')
+    @section('hero_subtitle', 'Control global de existencias, regímenes de dosificación y terapias asociadas')
 @endif
 
 @section('content')
@@ -23,7 +23,7 @@
 {{-- Alertas de éxito del sistema --}}
 @if(session('success'))
     <div class="alert alert-success" style="background-color: #ecfdf5; border-left: 4px solid #10b981; color: #065f46; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; font-weight: 500;">
-        ✅ {{ session('success') }}
+        ✨ {{ session('success') }}
     </div>
 @endif
 
@@ -81,42 +81,42 @@
         @method('PUT')
         <div class="form-grid">
             <div class="form-group">
-                <label for="nombre">Nombre Comercial / Genérico</label>
+                <label for="nombre">Denominación del Fármaco</label>
                 <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $medicamento->nombre }}" required>
             </div>
             <div class="form-group">
-                <label for="proveedor">Laboratorio / Proveedor</label>
+                <label for="proveedor">Firma Farmacéutica / Fabricante</label>
                 <input type="text" name="proveedor" id="proveedor" class="form-control" value="{{ $medicamento->proveedor }}" required>
             </div>
             <div class="form-group">
-                <label for="dosis">Dosis Asignada</label>
-                <input type="text" name="dosis" id="dosis" class="form-control" value="{{ $medicamento->dosis }}" placeholder="Ej. 500mg" required>
+                <label for="dosis">Concentración / Gramaje</label>
+                <input type="text" name="dosis" id="dosis" class="form-control" value="{{ $medicamento->dosis }}" placeholder="Ej. 850 mg / 5 ml" required>
             </div>
             <div class="form-group">
-                <label for="frecuencia">Frecuencia de Administración</label>
-                <input type="text" name="frecuencia" id="frecuencia" class="form-control" value="{{ $medicamento->frecuencia }}" placeholder="Ej. Cada 8 horas" required>
+                <label for="frecuencia">Pauta de Administración</label>
+                <input type="text" name="frecuencia" id="frecuencia" class="form-control" value="{{ $medicamento->frecuencia }}" placeholder="Ej. Cada 6 horas (con alimentos)" required>
             </div>
             <div class="form-group">
-                <label for="duracion">Duración del Tratamiento</label>
-                <input type="text" name="duracion" id="duracion" class="form-control" value="{{ $medicamento->duracion }}" placeholder="Ej. 7 días" required>
+                <label for="duracion">Periodo del Régimen</label>
+                <input type="text" name="duracion" id="duracion" class="form-control" value="{{ $medicamento->duracion }}" placeholder="Ej. 10 días o según evolución" required>
             </div>
             <div class="form-group">
-                <label for="tratamiento_id">Plan de Tratamiento Vinculado</label>
+                <label for="tratamiento_id">Vincular a Estrategia Terapéutica</label>
                 <select name="tratamiento_id" id="tratamiento_id" class="form-control" required>
                     @foreach($tratamientos as $t)
                         <option value="{{ $t->id }}" {{ $medicamento->tratamiento_id == $t->id ? 'selected' : '' }}>
-                            TRAT-{{ str_pad($t->id, 4, '0', STR_PAD_LEFT) }} - {{ $t->nombre ?? $t->descripcion }}
+                            TERAPIA-{{ str_pad($t->id, 4, '0', STR_PAD_LEFT) }} - {{ $t->nombre ?? $t->descripcion }}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group full-width">
-                <label for="efectos_secundarios">Efectos Secundarios / Advertencias</label>
+                <label for="efectos_secundarios">Restricciones Clínicas y Efectos Adversos</label>
                 <textarea name="efectos_secundarios" id="efectos_secundarios" rows="3" class="form-control" required>{{ $medicamento->efectos_secundarios }}</textarea>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn-update">🔄 Actualizar Medicamento</button>
-                <a href="{{ route('medicamentos.index') }}" class="btn-cancel">Cancelar</a>
+                <button type="submit" class="btn-update">💾 Guardar Cambios</button>
+                <a href="{{ route('medicamentos.index') }}" class="btn-cancel">Descartar</a>
             </div>
         </div>
     </form>
@@ -131,42 +131,42 @@
         @csrf
         <div class="form-grid">
             <div class="form-group">
-                <label for="nombre">Nombre Comercial / Genérico</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ej. Paracetamol / Amoxicilina" required autocomplete="off">
+                <label for="nombre">Denominación del Fármaco</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ej. Ibuprofeno / Omeprazol" required autocomplete="off">
             </div>
             <div class="form-group">
-                <label for="proveedor">Laboratorio / Proveedor</label>
-                <input type="text" name="proveedor" id="proveedor" class="form-control" placeholder="Ej. Pfizer, Bayer, Genfar" required>
+                <label for="proveedor">Firma Farmacéutica / Fabricante</label>
+                <input type="text" name="proveedor" id="proveedor" class="form-control" placeholder="Ej. Sanofi, Novartis, Tecnoquímicas" required>
             </div>
             <div class="form-group">
-                <label for="dosis">Dosis Asignada</label>
-                <input type="text" name="dosis" id="dosis" class="form-control" placeholder="Ej. 500 mg / 1 Tableta" required>
+                <label for="dosis">Concentración / Gramaje</label>
+                <input type="text" name="dosis" id="dosis" class="form-control" placeholder="Ej. 20 mg o 1 Ampolla" required>
             </div>
             <div class="form-group">
-                <label for="frecuencia">Frecuencia</label>
-                <input type="text" name="frecuencia" id="frecuencia" class="form-control" placeholder="Ej. Cada 12 horas" required>
+                <label for="frecuencia">Pauta de Administración</label>
+                <input type="text" name="frecuencia" id="frecuencia" class="form-control" placeholder="Ej. Cada 24 horas en ayunas" required>
             </div>
             <div class="form-group">
-                <label for="duracion">Duración</label>
-                <input type="text" name="duracion" id="duracion" class="form-control" placeholder="Ej. 5 días o Continuo" required>
+                <label for="duracion">Periodo del Régimen</label>
+                <input type="text" name="duracion" id="duracion" class="form-control" placeholder="Ej. 14 días completos" required>
             </div>
             <div class="form-group">
-                <label for="tratamiento_id">Vincular a Plan Clínico</label>
+                <label for="tratamiento_id">Vincular a Estrategia Terapéutica</label>
                 <select name="tratamiento_id" id="tratamiento_id" class="form-control" required>
-                    <option value="">-- Seleccione un Plan Clínico --</option>
+                    <option value="">-- Vincular un plan terapéutico activo --</option>
                     @foreach($tratamientos as $t)
                         <option value="{{ $t->id }}">
-                            TRAT-{{ str_pad($t->id, 4, '0', STR_PAD_LEFT) }} - {{ $t->nombre ?? $t->descripcion }}
+                            TERAPIA-{{ str_pad($t->id, 4, '0', STR_PAD_LEFT) }} - {{ $t->nombre ?? $t->descripcion }}
                         </option>
                     @endforeach
                 </select>
             </div>
             <div class="form-group full-width">
-                <label for="efectos_secundarios">Efectos Secundarios / Contraindicaciones</label>
-                <textarea name="efectos_secundarios" id="efectos_secundarios" rows="3" class="form-control" placeholder="Ej. Puede causar somnolencia, náuseas o requiere administrarse con alimentos..." required></textarea>
+                <label for="efectos_secundarios">Restricciones Clínicas y Efectos Adversos</label>
+                <textarea name="efectos_secundarios" id="efectos_secundarios" rows="3" class="form-control" placeholder="Ej. Monitorear presión arterial, evitar su consumo junto a lácteos, contraindicado en insuficiencia renal..." required></textarea>
             </div>
             <div class="form-actions">
-                <button type="submit" class="btn-submit">💾 Registrar Fármaco</button>
+                <button type="submit" class="btn-submit">🚀 Registrar en Catálogo</button>
                 <a href="{{ route('medicamentos.index') }}" class="btn-cancel">Regresar</a>
             </div>
         </div>
@@ -179,58 +179,58 @@
 @else
 <div class="content-header observe">
     <div class="content-header-left">
-        <h2>Inventario de Medicamentos</h2>
+        <h2>Stock Fármaco-Clínico</h2>
     </div>
-    <a href="{{ route('medicamentos.create') }}" class="btn btn-fill">➕ Nuevo Medicamento</a>
+    <a href="{{ route('medicamentos.create') }}" class="btn btn-fill">⚡ Nueva Entrada</a>
 </div>
 
 <div class="table-card observe">
     <table class="data-table">
         <thead>
             <tr>
-                <th>Código</th>
-                <th>Medicamento</th>
-                <th>Plan Clínico Asignado</th>
+                <th>Clave</th>
+                <th>Fármaco / Fabricante</th>
+                <th>Esquema Clínico Destinado</th>
                 <th>Dosificación e Intervalo</th>
                 <th>Duración</th>
-                <th>Efectos / Notas</th>
-                <th style="text-align: center;">Acciones</th>
+                <th>Advertencias / Notas</th>
+                <th style="text-align: center;">Gestión</th>
             </tr>
         </thead>
         <tbody>
             @forelse($medicamentos as $m)
             <tr>
-                <td style="font-weight: 600; color: #64748b;">MED-{{ str_pad($m->id, 4, '0', STR_PAD_LEFT) }}</td>
+                <td style="font-weight: 600; color: #64748b;">FRM-{{ str_pad($m->id, 4, '0', STR_PAD_LEFT) }}</td>
                 <td>
                     <strong>{{ $m->nombre }}</strong>
-                    <div style="font-size: 0.8rem; color: #64748b; margin-top: 2px;">🧪 Lab: {{ $m->proveedor }}</div>
+                    <div style="font-size: 0.8rem; color: #64748b; margin-top: 2px;">🔬 Lab: {{ $m->proveedor }}</div>
                 </td>
                 <td>
                     <span class="badge-tratamiento">
-                        📋 {{ $m->tratamiento->nombre ?? $m->tratamiento->descripcion ?? 'Tratamiento General' }}
+                        📁 {{ $m->tratamiento->nombre ?? $m->tratamiento->descripcion ?? 'Régimen Abierto' }}
                     </span>
                 </td>
                 <td>
-                    <span class="badge-dosis">💊 {{ $m->dosis }}</span>
-                    <div style="font-size: 0.8rem; color: #475569; margin-top: 4px;">⏱️ {{ $m->frecuencia }}</div>
+                    <span class="badge-dosis">🧬 {{ $m->dosis }}</span>
+                    <div style="font-size: 0.8rem; color: #475569; margin-top: 4px;">⏳ {{ $m->frecuencia }}</div>
                 </td>
-                <td style="font-weight: 500; color: #475569;">⏳ {{ $m->duracion }}</td>
+                <td style="font-weight: 500; color: #475569;">📅 {{ $m->duracion }}</td>
                 <td style="max-width: 220px; color: #64748b; font-size: 0.85rem; line-height: 1.3;">
-                    {{ $m->efectos_secundarios ?: 'Ninguno reportado' }}
+                    {{ $m->efectos_secundarios ?: 'Sin alertas registradas' }}
                 </td>
                 <td style="text-align: center;">
-                    <a href="{{ route('medicamentos.edit', $m->id) }}" class="btn-icon" title="Editar">✏️</a>
-                    <form action="{{ route('medicamentos.destroy', $m->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Está seguro de eliminar este medicamento?');">
+                    <a href="{{ route('medicamentos.edit', $m->id) }}" class="btn-icon" title="Modificar Fármaco">🛠️</a>
+                    <form action="{{ route('medicamentos.destroy', $m->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Está completamente seguro de retirar esta sustancia del inventario activo?');">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn-icon" style="background: none; border: none; cursor: pointer; padding: 0;">🗑️</button>
+                        <button type="submit" class="btn-icon" style="background: none; border: none; cursor: pointer; padding: 0;" title="Dar de baja">❌</button>
                     </form>
                 </td>
             </tr>
             @empty
             <tr>
                 <td colspan="7" style="text-align: center; color: #94a3b8; padding: 30px; font-style: italic;">
-                    No se encuentran medicamentos registrados en el sistema.
+                    No se registran recursos farmacológicos activos en este momento.
                 </td>
             </tr>
             @endforelse

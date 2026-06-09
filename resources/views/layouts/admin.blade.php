@@ -2,26 +2,20 @@
 <html lang="es">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>@yield('title') · SANAR+</title>
+    <title>@yield('title') · CliniSync+</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     <style>
-    *{cursor:none!important}
-    #cur{width:9px;height:9px;background:var(--green);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s}
-    #cur-r{width:32px;height:32px;border:1px solid rgba(45,122,79,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .1s,top .1s}
-    #cur.g{width:14px;height:14px}#cur-r.g{width:50px;height:50px}
-    @media(max-width:640px){#cur,#cur-r{display:none}*{cursor:auto!important}}
     </style>
 </head>
 <body>
-<div id="cur"></div><div id="cur-r"></div>
 <div class="grid-bg" style="opacity:.25"></div>
 
 <div class="layout">
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <a href="{{ url('/home') }}" class="sb-brand">
-            <div class="sb-logo">S+</div>
-            <div><div class="sb-name">SANAR<span>+</span></div><div class="sb-sub">Panel de control</div></div>
+            <div class="sb-logo">C+</div>
+            <div><div class="sb-name">CliniSync<span>+</span></div><div class="sb-sub">Panel de control</div></div>
         </a>
         <div style="padding:.5rem .4rem;flex:1">
             <div class="sb-section">Principal</div>
@@ -88,9 +82,6 @@
 </div>
 
 <script>
-const cur=document.getElementById('cur'),ring=document.getElementById('cur-r');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},90);});
-document.querySelectorAll('a,button,.data-table tr,.stat-card').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.classList.add('g');ring.classList.add('g');});el.addEventListener('mouseleave',()=>{cur.classList.remove('g');ring.classList.remove('g');});});
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');io.unobserve(x.target);}}),{threshold:.08});
 document.querySelectorAll('.observe').forEach(el=>io.observe(el));
 
